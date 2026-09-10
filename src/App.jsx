@@ -274,24 +274,24 @@ function Home() {
       </section>
       <section className="mx-auto max-w-[1240px] px-5 py-24 lg:px-8">
         <div className="mb-12 flex flex-col gap-5">
-          <div className="sponsor flex items-center gap-6">
-            <div>
-              <p className="mb-3 text-[11px] font-bold uppercase tracking-[0.18em] text-[#35ae86]">
-                Платформа университетского технологического предпринимательства
-              </p>
-              <p className="max-w-[300px] text-sm leading-6 text-[#6d7773]">
-                Проект реализован при поддержке Фонда содействия инновациям в
-                рамках программы "Студентческий стартап" мероприятия "Платформа
-                университетского технологического предпринимательства"
-                федерального проекта "Технологии"
-              </p>
-            </div>
-            <img
-              src={fund}
-              alt="Партнёры"
-              className="h-28 w-auto flex-shrink-0 rounded-2xl object-contain sm:h-36 lg:h-48"
-            />
-          </div>
+          <div className="sponsor flex flex-col items-start gap-5 sm:flex-row sm:items-center sm:gap-6">
+  <div>
+    <p className="mb-3 text-[11px] font-bold uppercase tracking-[0.18em] text-[#35ae86]">
+      Платформа университетского технологического предпринимательства
+    </p>
+    <p className="max-w-[300px] text-sm leading-6 text-[#6d7773]">
+      Проект реализован при поддержке Фонда содействия инновациям в
+      рамках программы "Студентческий стартап" мероприятия "Платформа
+      университетского технологического предпринимательства"
+      федерального проекта "Технологии"
+    </p>
+  </div>
+  <img
+    src={fund}
+    alt="Фонд содействия инновациям"
+    className="mx-auto h-40 w-auto flex-shrink-0 rounded-2xl object-contain sm:mx-0 sm:h-36 lg:h-48"
+  />
+</div>
           <div>
             <p className="mb-3 text-[11px] font-bold uppercase tracking-[0.18em] text-[#35ae86]">
               Наш подход
