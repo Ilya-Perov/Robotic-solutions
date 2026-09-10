@@ -10,5 +10,5 @@ export default defineConfig({
       '/media': 'http://localhost:8000',
     },
   },
-  base: '/robotic-solutions/',
+  base: '/Robotic-solutions/',
 });
