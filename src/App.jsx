@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import {
-  BrowserRouter,
+  HashRouter,
   Link,
   NavLink,
   Route,
@@ -27,7 +27,7 @@ import {
   X,
 } from "lucide-react";
 
-import fund from "./public/Fund.png";
+import fund from "./assets/Fund.png";
 
 const API_URL = "/api";
 
@@ -127,9 +127,9 @@ function getCategoryLabel(category) {
 
 function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Site />
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
