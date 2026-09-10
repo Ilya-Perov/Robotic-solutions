@@ -27,6 +27,8 @@ import {
   X,
 } from "lucide-react";
 
+import fund from "./public/Fund.png";
+
 const API_URL = "/api";
 
 const fallbackProstheses = [
@@ -146,7 +148,7 @@ function Site() {
               <Asterisk size={23} strokeWidth={2.8} />
             </span>
             <span className="text-[17px] font-bold tracking-[-0.03em]">
-              Forma<span className="text-[#43c99d]">.</span>
+              Робо-решения<span className="text-[#43c99d]">.</span>
             </span>
           </Link>
           <nav className="hidden items-center gap-8 md:flex">
@@ -235,11 +237,11 @@ function Home() {
             </div>
             <h1 className="max-w-[670px] text-[clamp(44px,6vw,80px)] font-semibold leading-[.98] tracking-[-0.065em] text-[#25302c]">
               Движение —<br />
-              <span className="text-[#36b58b]">это свобода.</span>
+              <span className="text-[#36b58b]">это свобода</span>
             </h1>
             <p className="mt-8 max-w-[470px] text-[17px] leading-8 text-[#5b6863]">
               Создаём современные протезы, которые помогают жить активно,
-              уверенно и в своём ритме.
+              уверенно и в своём ритме
             </p>
             <div className="mt-10 flex flex-wrap items-center gap-4">
               <Link
@@ -271,18 +273,36 @@ function Home() {
         </div>
       </section>
       <section className="mx-auto max-w-[1240px] px-5 py-24 lg:px-8">
-        <div className="mb-12 flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
+        <div className="mb-12 flex flex-col gap-5">
+          <div className="sponsor flex items-center gap-6">
+            <div>
+              <p className="mb-3 text-[11px] font-bold uppercase tracking-[0.18em] text-[#35ae86]">
+                Платформа университетского технологического предпринимательства
+              </p>
+              <p className="max-w-[300px] text-sm leading-6 text-[#6d7773]">
+                Проект реализован при поддержке Фонда содействия инновациям в
+                рамках программы "Студентческий стартап" мероприятия "Платформа
+                университетского технологического предпринимательства"
+                федерального проекта "Технологии"
+              </p>
+            </div>
+            <img
+              src={fund}
+              alt="Партнёры"
+              className="h-28 w-auto flex-shrink-0 rounded-2xl object-contain sm:h-36 lg:h-48"
+            />
+          </div>
           <div>
             <p className="mb-3 text-[11px] font-bold uppercase tracking-[0.18em] text-[#35ae86]">
               Наш подход
             </p>
             <h2 className="text-4xl font-semibold tracking-[-.05em] sm:text-5xl">
-              Почему Forma<span className="text-[#5cedb8]">.</span>
+              Почему Робо-решения<span className="text-[#5cedb8]"></span>
             </h2>
           </div>
           <p className="max-w-[340px] text-sm leading-6 text-[#6d7773]">
             Мы объединяем медицинскую экспертизу, технологичность и человеческое
-            отношение.
+            отношение
           </p>
         </div>
         <div className="grid gap-px overflow-hidden rounded-3xl bg-[#d8dfdc] md:grid-cols-2 lg:grid-cols-4">
@@ -312,7 +332,7 @@ function Home() {
             <h2 className="max-w-[540px] text-3xl font-semibold leading-tight tracking-[-.04em] text-white sm:text-4xl">
               Давайте найдём решение,
               <br />
-              которое подойдёт именно вам.
+              которое подойдёт именно вам
             </h2>
           </div>
           <Link
@@ -347,7 +367,7 @@ function Catalog() {
         <h1 className="text-5xl font-semibold leading-[1.02] tracking-[-.06em] sm:text-7xl">
           Найдите своё
           <br />
-          <span className="text-[#35b88e]">движение.</span>
+          <span className="text-[#35b88e]">движение</span>
         </h1>
         <p className="mt-6 max-w-[480px] text-base leading-7 text-[#6d7773]">
           Каждый протез создаётся, чтобы стать естественной частью вашей жизни.
@@ -508,13 +528,13 @@ function About() {
           <h1 className="text-5xl font-semibold leading-[1.02] tracking-[-.06em] sm:text-7xl">
             Человечность
             <br />
-            <span className="text-[#35b88e]">в каждом шаге.</span>
+            <span className="text-[#35b88e]">в каждом шаге</span>
           </h1>
         </div>
         <p className="max-w-[470px] text-base leading-8 text-[#68746e]">
-          Forma — это место, где технологии встречаются с вниманием. Мы верим,
-          что хороший протез — не просто медицинское изделие, а инструмент для
-          возвращения к любимым делам.
+          Робо-решения — это место, где технологии встречаются с вниманием. Мы
+          верим, что хороший протез — не просто медицинское изделие, а
+          инструмент для возвращения к любимым делам
         </p>
       </div>
       <div className="mt-16 grid gap-5 md:grid-cols-2">
@@ -572,7 +592,7 @@ function Contacts() {
             <span className="text-[#35b88e]">Напишите нам</span>
           </h1>
           <p className="mt-7 max-w-[370px] text-base leading-7 text-[#6d7773]">
-            Напишите нам на почту или позвоните — мы всегда на связи.
+            Напишите нам на почту или позвоните — мы всегда на связи
           </p>
         </div>
 
@@ -653,7 +673,7 @@ function Footer() {
             <Asterisk size={20} />
           </span>
           <span className="font-bold">
-            Forma<span className="text-[#43c99d]">.</span>
+            Робо-решения<span className="text-[#43c99d]">.</span>
           </span>
         </Link>
         <div className="flex flex-wrap gap-x-6 gap-y-3 text-xs text-[#7a8580]">
@@ -668,7 +688,7 @@ function Footer() {
           </Link>
         </div>
         <p className="text-xs text-[#9aa39f]">
-          © 2024 Forma. Движение — это свобода.
+          © 2026 Робо-решения. Движение — это свобода.
         </p>
       </div>
     </footer>
