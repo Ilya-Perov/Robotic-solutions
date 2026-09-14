@@ -617,14 +617,14 @@ function Contacts() {
                 Ответим в течение рабочего дня
               </p>
             </div>
-            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#d8f8eb] text-[#279e78]">
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#d8f8eb] text-[#000000]">
               <MessageCircle size={21} />
             </div>
           </div>
 
           <div className="space-y-6 text-[#2d2d2d]">
             <div className="flex items-start gap-4">
-              <Phone size={20} className="mt-0.5 text-[#5cedb8]" />
+              <Phone size={20} className="mt-0.5 text-[#000000]" />
               <div>
                 <p className="text-sm font-semibold">Телефон</p>
                 <a
@@ -637,7 +637,7 @@ function Contacts() {
             </div>
 
             <div className="flex items-start gap-4">
-              <MessageCircle size={20} className="mt-0.5 text-[#5cedb8]" />
+              <MessageCircle size={20} className="mt-0.5 text-[#000000]" />
               <div>
                 <p className="text-sm font-semibold">Email</p>
                 <a
@@ -650,7 +650,7 @@ function Contacts() {
             </div>
 
             <div className="flex items-start gap-4">
-              <Compass size={20} className="mt-0.5 text-[#5cedb8]" />
+              <Compass size={20} className="mt-0.5 text-[#000000]" />
               <div>
                 <p className="text-sm font-semibold">Адрес</p>
                 <p className="text-base">г. Москва, ул. Примерная, д. 1</p>
@@ -658,7 +658,7 @@ function Contacts() {
             </div>
 
             <div className="flex items-start gap-4">
-              <Clock3 size={20} className="mt-0.5 text-[#5cedb8]" />
+              <Clock3 size={20} className="mt-0.5 text-[#000000]" />
               <div>
                 <p className="text-sm font-semibold">Часы работы</p>
                 <p className="text-base">Пн–Пт: 9:00 – 21:00</p>
