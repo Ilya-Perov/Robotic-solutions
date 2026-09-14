@@ -28,6 +28,7 @@ import {
 } from "lucide-react";
 
 import fund from "./assets/Fund.png";
+import technologies from "./assets/Fp_Technologies_Logo.png"
 
 const API_URL = "/api";
 
@@ -98,22 +99,22 @@ const benefits = [
   {
     icon: Stethoscope,
     title: "Опыт и точность",
-    text: "Подбираем решение на основе ваших задач, образа жизни и медицинских рекомендаций.",
+    text: "Подбираем решение на основе ваших задач, образа жизни и медицинских рекомендаций",
   },
   {
     icon: HeartHandshake,
     title: "Забота рядом",
-    text: "Остаёмся на связи после выдачи, чтобы вы быстро привыкли к новому ритму.",
+    text: "Остаёмся на связи после выдачи, чтобы вы быстро привыкли к новому ритму",
   },
   {
     icon: Sparkles,
     title: "Современные материалы",
-    text: "Работаем с надёжными технологиями, которые делают движение естественнее.",
+    text: "Работаем с надёжными технологиями, которые делают движение естественнее",
   },
   {
     icon: ShieldCheck,
     title: "Гарантия уверенности",
-    text: "Прозрачный процесс, понятные сроки и внимание к каждой детали.",
+    text: "Прозрачный процесс, понятные сроки и внимание к каждой детали",
   },
 ];
 
@@ -144,14 +145,14 @@ function Site() {
             className="group flex items-center gap-3"
             onClick={() => setMobileOpen(false)}
           >
-            <span className="flex h-10 w-10 items-center justify-center rounded-[14px] bg-[#5cedb8] text-[#174b3d] transition-transform group-hover:rotate-6">
+            <span className="flex h-10 w-10 items-center justify-center rounded-[16px] bg-[#5cedb8] text-[#174b3d] transition-transform group-hover:rotate-6">
               <Asterisk size={23} strokeWidth={2.8} />
             </span>
             <span className="text-[17px] font-bold tracking-[-0.03em]">
               Робо-решения<span className="text-[#43c99d]">.</span>
             </span>
           </Link>
-          <nav className="hidden items-center gap-8 md:flex">
+          <nav className="hidden items-center text-[16px] gap-8 md:flex">
             <NavItem to="/">Главная</NavItem>
             <NavItem to="/catalog">Каталог</NavItem>
             <NavItem to="/about">О компании</NavItem>
@@ -159,9 +160,9 @@ function Site() {
           </nav>
           <Link
             to="/contacts"
-            className="hidden items-center gap-2 rounded-full bg-[#2d2d2d] px-5 py-3 text-[13px] font-semibold text-white transition hover:bg-[#174b3d] sm:flex"
+            className="hidden items-center gap-2 rounded-full bg-[#2d2d2d] px-5 py-3 text-[16px] font-semibold text-white transition hover:bg-[#174b3d] sm:flex"
           >
-            Оставить заявку <ArrowRight size={15} />
+            Оставить заявку
           </Link>
           <button
             className="rounded-xl p-2 md:hidden"
@@ -173,7 +174,7 @@ function Site() {
         </div>
         {mobileOpen && (
           <div className="border-t border-black/[0.06] bg-[#f5f6f5] px-5 py-5 md:hidden">
-            <div className="flex flex-col gap-5">
+            <div className="flex flex-col text-[16px] gap-5">
               <NavItem to="/" onClick={() => setMobileOpen(false)}>
                 Главная
               </NavItem>
@@ -231,30 +232,30 @@ function Home() {
         <div className="absolute -right-20 -top-24 h-[480px] w-[480px] rounded-full bg-[#5cedb8]/25 blur-3xl" />
         <div className="mx-auto grid min-h-[660px] max-w-[1240px] items-center gap-12 px-5 py-20 lg:grid-cols-[1.05fr_.95fr] lg:px-8 lg:py-24">
           <div className="relative z-10 animate-fade-in">
-            <div className="mb-7 flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.18em] text-[#248e6d]">
+            <div className="mb-7 flex items-center gap-2 text-[12px] font-bold uppercase tracking-[0.18em] text-[#248e6d]">
               <span className="h-2 w-2 rounded-full bg-[#5cedb8]" />{" "}
               Пространство движения
             </div>
             <h1 className="max-w-[670px] text-[clamp(44px,6vw,80px)] font-semibold leading-[.98] tracking-[-0.065em] text-[#25302c]">
-              Движение —<br />
-              <span className="text-[#36b58b]">это свобода</span>
+              Движение — <span className="text-[#36b58b]">это свобода</span>
+              
             </h1>
-            <p className="mt-8 max-w-[470px] text-[17px] leading-8 text-[#5b6863]">
+            <p className="mt-8 max-w-[470px] text-[18px] leading-8 text-[#5b6863]">
               Создаём современные протезы, которые помогают жить активно,
               уверенно и в своём ритме
             </p>
-            <div className="mt-10 flex flex-wrap items-center gap-4">
+            <div className="mt-10 flex text-[16px] flex-wrap items-center gap-4">
               <Link
                 to="/catalog"
                 className="flex items-center gap-3 rounded-full bg-[#5cedb8] px-6 py-4 text-sm font-bold text-[#174b3d] shadow-[0_12px_30px_rgba(65,181,142,.18)] transition hover:-translate-y-0.5 hover:bg-[#47dca9]"
               >
-                Смотреть каталог <MoveRight size={18} />
+                Смотреть каталог
               </Link>
               <Link
                 to="/about"
-                className="flex items-center gap-2 px-2 py-3 text-sm font-semibold text-[#58645f] transition hover:text-[#168c68]"
+                className="flex items-center gap-3 rounded-full bg-[#ffffff] px-6 py-4 text-sm font-bold text-[#174b3d] shadow-[0_12px_30px_rgba(65,181,142,.18)] transition hover:-translate-y-0.5 hover:bg-[#47dca9]"
               >
-                Узнать о нас <ChevronRight size={16} />
+                Узнать о нас
               </Link>
             </div>
           </div>
@@ -265,7 +266,7 @@ function Home() {
               <div className="absolute bottom-[-125px] h-[160px] w-[82px] rounded-b-[45px] rounded-t-[15px] bg-gradient-to-br from-[#9db9ac] to-[#56796c] shadow-lg lg:bottom-[-155px] lg:h-[200px] lg:w-[120px]" />
               <div className="absolute left-1/2 top-[18%] h-8 w-[54px] -translate-x-1/2 rounded-full bg-white/50 blur-sm" />
             </div>
-            <div className="absolute bottom-2 left-1/2 flex -translate-x-1/2 items-center gap-2 rounded-full border border-white/70 bg-white/75 px-4 py-2 text-[11px] font-semibold text-[#4a6258] backdrop-blur">
+            <div className="absolute bottom-2 left-1/2 flex -translate-x-1/2 items-center gap-2 rounded-full border border-white/70 bg-white/75 px-4 py-2 text-[12px] font-semibold text-[#4a6258] backdrop-blur">
               Индивидуальный подход{" "}
               <CircleCheck size={14} className="text-[#26ae83]" />
             </div>
@@ -276,36 +277,48 @@ function Home() {
         <div className="mb-12 flex flex-col gap-5">
           <div className="sponsor flex flex-col items-start gap-5 sm:flex-row sm:items-center sm:gap-6">
   <div>
-    <p className="mb-3 text-[11px] font-bold uppercase tracking-[0.18em] text-[#35ae86]">
+    
+    <p className="mb-3 text-[16px] font-bold uppercase tracking-[0.18em] text-[#35ae86]">
       Платформа университетского технологического предпринимательства
     </p>
-    <p className="max-w-[300px] text-sm leading-6 text-[#6d7773]">
+    <h2 className="mb-3 text-4xl font-semibold tracking-[-.05em] sm:text-5xl">
+              Поддержка проекта<span className="text-[#5cedb8]"></span>
+            </h2>
+    <p className="max-w-[300px] mb-7 text-[16px] text-sm leading-6 text-[#6d7773] ">
       Проект реализован при поддержке Фонда содействия инновациям в
       рамках программы "Студентческий стартап" мероприятия "Платформа
       университетского технологического предпринимательства"
       федерального проекта "Технологии"
     </p>
   </div>
-  <img
+  <div className="flex flex-col mb-7 sm:mb-10">
+    <img
     src={fund}
     alt="Фонд содействия инновациям"
-    className="mx-auto h-40 w-auto flex-shrink-0 rounded-2xl object-contain sm:mx-0 sm:h-36 lg:h-48"
+    className="mx-auto mb-7 h-40 w-auto flex-shrink-0 rounded-2xl object-contain  sm:mx-0 sm:h-36 lg:h-48"
   />
+  <img
+    src={technologies}
+    alt="Фонд содействия инновациям"
+    className="mx-auto h-40 w-auto flex-shrink-0 rounded-2xl object-contain bg-[#000000] sm:mx-0 sm:h-36 lg:h-48"
+  />
+  </div>
+  
 </div>
           <div>
-            <p className="mb-3 text-[11px] font-bold uppercase tracking-[0.18em] text-[#35ae86]">
+            <p className="mb-3 text-[16px] font-bold uppercase tracking-[0.18em] text-[#35ae86]">
               Наш подход
             </p>
             <h2 className="text-4xl font-semibold tracking-[-.05em] sm:text-5xl">
               Почему Робо-решения<span className="text-[#5cedb8]"></span>
             </h2>
           </div>
-          <p className="max-w-[340px] text-sm leading-6 text-[#6d7773]">
+          <p className="max-w-[340px] text-[16px] text-sm leading-6 text-[#6d7773]">
             Мы объединяем медицинскую экспертизу, технологичность и человеческое
             отношение
           </p>
         </div>
-        <div className="grid gap-px overflow-hidden rounded-3xl bg-[#d8dfdc] md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-px overflow-hidden text-[16px] rounded-3xl bg-[#d8dfdc] md:grid-cols-2 lg:grid-cols-4">
           {benefits.map(({ icon: Icon, title, text }, i) => (
             <div
               key={title}
@@ -314,7 +327,7 @@ function Home() {
               <div className="mb-12 flex h-11 w-11 items-center justify-center rounded-2xl bg-[#d8f8eb] text-[#299e79]">
                 <Icon size={21} />
               </div>
-              <span className="text-[11px] font-bold text-[#9aa49f]">
+              <span className="text-[12px] font-bold text-[#9aa49f]">
                 0{i + 1}
               </span>
               <h3 className="mt-3 text-lg font-semibold">{title}</h3>
@@ -326,7 +339,7 @@ function Home() {
       <section className="mx-5 mb-24 overflow-hidden rounded-[28px] bg-[#2d2d2d] lg:mx-auto lg:max-w-[1240px]">
         <div className="grid items-center gap-10 px-7 py-12 sm:px-12 lg:grid-cols-[1fr_auto] lg:px-16 lg:py-16">
           <div>
-            <p className="mb-4 text-[11px] font-bold uppercase tracking-[0.18em] text-[#5cedb8]">
+            <p className="mb-4 text-[12px] font-bold uppercase tracking-[0.18em] text-[#5cedb8]">
               Есть вопросы?
             </p>
             <h2 className="max-w-[540px] text-3xl font-semibold leading-tight tracking-[-.04em] text-white sm:text-4xl">
@@ -339,7 +352,7 @@ function Home() {
             to="/contacts"
             className="flex w-fit items-center gap-3 rounded-full bg-[#5cedb8] px-6 py-4 text-sm font-bold text-[#174b3d] transition hover:bg-[#fff]"
           >
-            Связаться с нами <ArrowRight size={17} />
+            Связаться с нами
           </Link>
         </div>
       </section>
@@ -360,18 +373,16 @@ function Catalog() {
   }, []);
   return (
     <section className="mx-auto max-w-[1240px] px-5 py-16 lg:px-8 lg:py-24">
-      <div className="mb-12 max-w-[650px]">
-        <p className="mb-4 text-[11px] font-bold uppercase tracking-[0.18em] text-[#35ae86]">
+      <div className="mb-12 max-w-[1000px]">
+        <p className="mb-4 text-[14px] font-bold uppercase tracking-[0.18em] text-[#35ae86]">
           Каталог решений
         </p>
         <h1 className="text-5xl font-semibold leading-[1.02] tracking-[-.06em] sm:text-7xl">
-          Найдите своё
-          <br />
-          <span className="text-[#35b88e]">движение</span>
+          Найдите своё<span className="text-[#35b88e]"> движение</span>
         </h1>
-        <p className="mt-6 max-w-[480px] text-base leading-7 text-[#6d7773]">
+        <p className="mt-6 max-w-[480px] text-[16px] text-base leading-7 text-[#6d7773]">
           Каждый протез создаётся, чтобы стать естественной частью вашей жизни.
-          Выберите направление — мы расскажем подробнее.
+          Выберите направление — мы расскажем подробнее
         </p>
       </div>
       <div className="mb-7 flex items-center justify-between border-b border-[#dce3df] pb-4 text-sm text-[#7b8581]">
@@ -507,7 +518,7 @@ function ProductModal({ item, onClose }) {
                 }}
                 className="flex w-full items-center justify-center gap-3 rounded-full bg-[#2d2d2d] px-5 py-4 text-sm font-bold text-white transition hover:bg-[#174b3d]"
               >
-                Оставить заявку <ArrowRight size={16} />
+                Оставить заявку
               </button>
             </div>
           </div>
@@ -522,7 +533,7 @@ function About() {
     <section className="mx-auto max-w-[1240px] px-5 py-16 lg:px-8 lg:py-24">
       <div className="grid gap-14 lg:grid-cols-[.8fr_1.2fr] lg:items-end">
         <div>
-          <p className="mb-4 text-[11px] font-bold uppercase tracking-[.18em] text-[#35ae86]">
+          <p className="mb-4 text-[12px] font-bold uppercase tracking-[.18em] text-[#35ae86]">
             О компании
           </p>
           <h1 className="text-5xl font-semibold leading-[1.02] tracking-[-.06em] sm:text-7xl">
@@ -540,7 +551,7 @@ function About() {
       <div className="mt-16 grid gap-5 md:grid-cols-2">
         <div className="flex min-h-[360px] items-end rounded-[28px] border border-[#d8e1dc] bg-[#e1eae5] p-8">
           <div>
-            <span className="text-[11px] font-bold uppercase tracking-[.16em] text-[#699181]">
+            <span className="text-[12px] font-bold uppercase tracking-[.16em] text-[#699181]">
               Наша философия
             </span>
             <p className="mt-4 max-w-[320px] text-2xl font-semibold leading-tight tracking-[-.04em] text-[#395248]">
@@ -550,11 +561,11 @@ function About() {
         </div>
         <div className="flex min-h-[360px] items-end rounded-[28px] border border-[#d7d7d5] bg-[#e9e8e5] p-8">
           <div>
-            <span className="text-[11px] font-bold uppercase tracking-[.16em] text-[#938f88]">
+            <span className="text-[12px] font-bold uppercase tracking-[.16em] text-[#938f88]">
               Будущее рядом
             </span>
             <p className="mt-4 max-w-[320px] text-2xl font-semibold leading-tight tracking-[-.04em] text-[#5d5b57]">
-              Место для вашей истории и будущих фотографий.
+              Место для вашей истории и будущих фотографий
             </p>
           </div>
         </div>
@@ -583,7 +594,7 @@ function Contacts() {
     <section className="mx-auto max-w-[1240px] px-5 py-16 lg:px-8 lg:py-24">
       <div className="grid gap-14 lg:grid-cols-[.8fr_1.2fr] lg:items-start">
         <div>
-          <p className="mb-4 text-[11px] font-bold uppercase tracking-[.18em] text-[#35ae86]">
+          <p className="mb-4 text-[12px] font-bold uppercase tracking-[.18em] text-[#35ae86]">
             Контакты
           </p>
           <h1 className="text-5xl font-semibold leading-[1.02] tracking-[-.06em] sm:text-7xl">
