@@ -27,7 +27,7 @@ echo "→ Собираем статику..."
 gosu appuser python manage.py collectstatic --noinput --clear
 
 echo "→ Запускаем Gunicorn..."
-exec gosu appuser gunicorn prosthetics_shop.wsgi:application \
+exec gosu appuser gunicorn robo_solutions.wsgi:application \
     --bind 0.0.0.0:8000 \
     --workers 4 \
     --worker-class sync \

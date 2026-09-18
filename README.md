@@ -23,11 +23,11 @@ python manage.py runserver 8000
 
 Админка каталога: `http://localhost:8000/admin/`
 
-API каталога: `http://localhost:8000/api/prostheses/`
+API каталога: `http://localhost:8000/api/robo_solutions/`
 
 API формы: `http://localhost:8000/api/send-request/`
 
-Почта пока выводится в консоль Django. Когда будут готовы настройки компании, раскомментируйте SMTP-параметры в `backend/prosthetics_shop/settings.py`.
+Почта пока выводится в консоль Django. Когда будут готовы настройки компании, раскомментируйте SMTP-параметры в `backend/robo_solutions/settings.py`.
 
 ## Запуск frontend
 

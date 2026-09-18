@@ -15,7 +15,12 @@ COPY default.http.conf /etc/nginx/templates-available/default.http.conf
 
 # Entrypoint, который выберет нужный конфиг при старте
 COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+
+# Чистим CRLF и даём права на исполнение
+RUN sed -i 's/\r$//' /entrypoint.sh \
+    && sed -i 's/\r$//' /etc/nginx/templates-available/default.conf \
+    && sed -i 's/\r$//' /etc/nginx/templates-available/default.http.conf \
+    && chmod +x /entrypoint.sh
 
 # Healthcheck - проверяем что nginx отвечает
 HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \

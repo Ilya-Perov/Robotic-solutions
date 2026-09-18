@@ -3,17 +3,17 @@ from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .models import Prosthesis
-from .serializers import ProsthesisSerializer, ContactRequestSerializer
+from .models import Robot
+from .serializers import RobotSerializer, ContactRequestSerializer
 
 
-class ProsthesisListView(generics.ListAPIView):
-    queryset = Prosthesis.objects.all()
-    serializer_class = ProsthesisSerializer
-
-    def get_serializer_context(self):
-        context = super().get_serializer_context()
-        return context
+class RobotListView(generics.ListAPIView):
+    queryset = Robot.objects.all()
+    serializer_class = RobotSerializer
+    pagination_class = None
+    search_fields = ["name", "short_description", "full_description"]
+    ordering_fields = ["id", "name", "weight_kg", "max_speed_kmh", "autonomy_hours"]
+    filterset_fields = ["category"]
 
 
 class SendRequestView(APIView):
@@ -29,8 +29,8 @@ class SendRequestView(APIView):
             f"Email: {data['email']}\n"
             f"Сообщение: {data.get('message', '-')}"
         )
-        from_email = "noreply@prosthetics-shop.ru"
-        recipient_list = ["info@prosthetics-shop.ru"]
+        from_email = "noreply@robo-solutions.ru"
+        recipient_list = ["info@robo-solutions.ru"]
 
         try:
             send_mail(

@@ -9,7 +9,6 @@ import {
 } from "react-router-dom";
 import {
   ArrowRight,
-  Asterisk,
   BadgeCheck,
   ChevronRight,
   CircleCheck,
@@ -28,70 +27,39 @@ import {
 } from "lucide-react";
 
 import fund from "./assets/Fund.png";
-import technologies from "./assets/Fp_Technologies_Logo.png"
+import technologies from "./assets/FP_Technologies_Logo.png";
+import robologo from "./assets/Robo_Logo_orig.png";
 
 const API_URL = "/api";
 
-const fallbackProstheses = [
+const fallbackRobots = [
   {
     id: 1,
-    name: "Active One",
-    short_description: "Лёгкий спортивный протез для активного образа жизни.",
+    name: "EcoPatrol One",
+    short_description:
+      "Компактная платформа для экологического мониторинга водоёмов.",
     full_description:
-      "Active One создан для тех, кто не привык останавливаться. Карбоновая конструкция, естественная амортизация и точная настройка помогают уверенно двигаться в городе, на прогулках и во время тренировок.",
-    category: "legs",
+      "EcoPatrol One создан для регулярного патрулирования акваторий.",
+    category: "monitoring",
+    category_label: "Мониторинг",
     price: null,
     image: null,
-  },
-  {
-    id: 2,
-    name: "Neuro Hand",
-    short_description: "Функциональный протез кисти с естественным хватом.",
-    full_description:
-      "Neuro Hand сочетает выразительный дизайн и технологичную механику. Пять режимов хвата и мягкое управление позволяют комфортно выполнять повседневные задачи.",
-    category: "arms",
-    price: null,
-    image: null,
-  },
-  {
-    id: 3,
-    name: "Silhouette",
-    short_description: "Анатомичная косметическая оболочка на заказ.",
-    full_description:
-      "Silhouette повторяет индивидуальную форму тела и помогает чувствовать себя уверенно в любой ситуации. Доступны разные оттенки и фактуры поверхности.",
-    category: "cosmetic",
-    price: null,
-    image: null,
-  },
-  {
-    id: 4,
-    name: "Urban Step",
-    short_description: "Надёжное решение для комфортного движения каждый день.",
-    full_description:
-      "Urban Step разработан для длительной ходьбы и насыщенного ритма жизни. Стабильная стопа и комфортная посадка уменьшают нагрузку и дарят свободу движения.",
-    category: "legs",
-    price: null,
-    image: null,
-  },
-  {
-    id: 5,
-    name: "Precision Grip",
-    short_description: "Точный протез предплечья для работы и творчества.",
-    full_description:
-      "Precision Grip помогает вернуть контроль над привычными действиями. Модульная конструкция адаптируется под разные задачи и легко дополняется аксессуарами.",
-    category: "arms",
-    price: null,
-    image: null,
-  },
-  {
-    id: 6,
-    name: "Natural Form",
-    short_description: "Деликатная персонализированная эстетика.",
-    full_description:
-      "Natural Form создаётся по индивидуальным меркам и учитывает особенности вашего тела. Лёгкие материалы и аккуратная детализация делают результат максимально естественным.",
-    category: "cosmetic",
-    price: null,
-    image: null,
+    length_m: 2.0,
+    width_m: 1.0,
+    weight_kg: 12,
+    max_speed_kmh: 5,
+    autonomy_hours: 2,
+    range_km: 5,
+    payload_kg: 2,
+    control_range_km: 1,
+    battery_capacity_mah: 10000,
+    ip_rating: "IP67",
+    min_temperature_c: 5,
+    max_wind_ms: 8,
+    supports_camera: true,
+    supports_water_sensors: true,
+    supports_beacon: true,
+    supports_tug: true,
   },
 ];
 
@@ -99,30 +67,32 @@ const benefits = [
   {
     icon: Stethoscope,
     title: "Опыт и точность",
-    text: "Подбираем решение на основе ваших задач, образа жизни и медицинских рекомендаций",
+    text: "Подбираем конфигурацию под задачи клиента и условия эксплуатации",
   },
   {
     icon: HeartHandshake,
     title: "Забота рядом",
-    text: "Остаёмся на связи после выдачи, чтобы вы быстро привыкли к новому ритму",
+    text: "Остаёмся на связи после запуска, чтобы вы быстро освоили управление и модульную замену оборудования",
   },
   {
     icon: Sparkles,
     title: "Современные материалы",
-    text: "Работаем с надёжными технологиями, которые делают движение естественнее",
+    text: "Используем современные материалы и элементы 3D-печати — устройства лёгкие, ремонтопригодные и совместимые с модульными креплениями",
   },
   {
     icon: ShieldCheck,
     title: "Гарантия уверенности",
-    text: "Прозрачный процесс, понятные сроки и внимание к каждой детали",
+    text: "Продумываем защиту корпуса и условия эксплуатации под климат и сценарии использования",
   },
 ];
 
 function getCategoryLabel(category) {
   return (
-    { legs: "Протезы ног", arms: "Протезы рук", cosmetic: "Косметические" }[
-      category
-    ] || "Протез"
+    {
+      monitoring: "Мониторинг",
+      rescue: "Спасательные операции",
+      sensors: "Датчики и модули",
+    }[category] || "Модуль"
   );
 }
 
@@ -139,15 +109,17 @@ function Site() {
   return (
     <div className="min-h-screen bg-[#f5f6f5] text-[#2d2d2d]">
       <header className="fixed inset-x-0 top-0 z-40 border-b border-black/[0.06] bg-[#f5f6f5]/90 backdrop-blur-xl">
-        <div className="mx-auto flex h-[76px] max-w-[1240px] items-center justify-between px-5 lg:px-8">
+        <div className="mx-auto flex h-[96px] max-w-[1240px] items-center justify-between px-5 lg:px-8">
           <Link
             to="/"
             className="group flex items-center gap-3"
             onClick={() => setMobileOpen(false)}
           >
-            <span className="flex h-10 w-10 items-center justify-center rounded-[16px] bg-[#5cedb8] text-[#174b3d] transition-transform group-hover:rotate-6">
-              <Asterisk size={23} strokeWidth={2.8} />
-            </span>
+            <img
+              src={robologo}
+              alt="Робо-решения"
+              className="h-20 w-20 rounded-[16px] object-contain transition-transform group-hover:rotate-2"
+            />
             <span className="text-[17px] font-bold tracking-[-0.03em]">
               Робо-решения<span className="text-[#43c99d]">.</span>
             </span>
@@ -234,15 +206,15 @@ function Home() {
           <div className="relative z-10 animate-fade-in">
             <div className="mb-7 flex items-center gap-2 text-[12px] font-bold uppercase tracking-[0.18em] text-[#248e6d]">
               <span className="h-2 w-2 rounded-full bg-[#5cedb8]" />{" "}
-              Пространство движения
+              Высокотехнологичные роботизированные решения
             </div>
             <h1 className="max-w-[670px] text-[clamp(44px,6vw,80px)] font-semibold leading-[.98] tracking-[-0.065em] text-[#25302c]">
-              Движение — <span className="text-[#36b58b]">это свобода</span>
-              
+              Технологии — <span className="text-[#36b58b]">это возможности</span>
             </h1>
             <p className="mt-8 max-w-[470px] text-[18px] leading-8 text-[#5b6863]">
-              Создаём современные протезы, которые помогают жить активно,
-              уверенно и в своём ритме
+              Разрабатываем компактные роботизированные платформы для экологического
+              мониторинга и поддержки спасательных операций — а также создаём устройства
+              под индивидуальный запрос
             </p>
             <div className="mt-10 flex text-[16px] flex-wrap items-center gap-4">
               <Link
@@ -267,7 +239,7 @@ function Home() {
               <div className="absolute left-1/2 top-[18%] h-8 w-[54px] -translate-x-1/2 rounded-full bg-white/50 blur-sm" />
             </div>
             <div className="absolute bottom-2 left-1/2 flex -translate-x-1/2 items-center gap-2 rounded-full border border-white/70 bg-white/75 px-4 py-2 text-[12px] font-semibold text-[#4a6258] backdrop-blur">
-              Индивидуальный подход{" "}
+              Модульная замена оборудования{" "}
               <CircleCheck size={14} className="text-[#26ae83]" />
             </div>
           </div>
@@ -276,35 +248,33 @@ function Home() {
       <section className="mx-auto max-w-[1240px] px-5 py-24 lg:px-8">
         <div className="mb-12 flex flex-col gap-5">
           <div className="sponsor flex flex-col items-start gap-5 sm:flex-row sm:items-center sm:gap-6">
-  <div>
-    
-    <p className="mb-3 text-[16px] font-bold uppercase tracking-[0.18em] text-[#35ae86]">
-      Платформа университетского технологического предпринимательства
-    </p>
-    <h2 className="mb-3 text-4xl font-semibold tracking-[-.05em] sm:text-5xl">
-              Поддержка проекта<span className="text-[#5cedb8]"></span>
-            </h2>
-    <p className="max-w-[300px] mb-7 text-[16px] text-sm leading-6 text-[#6d7773] ">
-      Проект реализован при поддержке Фонда содействия инновациям в
-      рамках программы "Студентческий стартап" мероприятия "Платформа
-      университетского технологического предпринимательства"
-      федерального проекта "Технологии"
-    </p>
-  </div>
-  <div className="flex flex-col mb-7 sm:mb-10">
-    <img
-    src={fund}
-    alt="Фонд содействия инновациям"
-    className="mx-auto mb-7 h-40 w-auto flex-shrink-0 rounded-2xl object-contain  sm:mx-0 sm:h-36 lg:h-48"
-  />
-  <img
-    src={technologies}
-    alt="Фонд содействия инновациям"
-    className="mx-auto h-40 w-auto flex-shrink-0 rounded-2xl object-contain bg-[#000000] sm:mx-0 sm:h-36 lg:h-48"
-  />
-  </div>
-  
-</div>
+            <div>
+              <p className="mb-3 text-[16px] font-bold uppercase tracking-[0.18em] text-[#35ae86]">
+                Платформа университетского технологического предпринимательства
+              </p>
+              <h2 className="mb-3 text-4xl font-semibold tracking-[-.05em] sm:text-5xl">
+                Поддержка проекта<span className="text-[#5cedb8]"></span>
+              </h2>
+              <p className="max-w-[300px] mb-7 text-[16px] text-sm leading-6 text-[#6d7773] ">
+                Проект реализован при поддержке Фонда содействия инновациям в
+                рамках программы "Студентческий стартап" мероприятия "Платформа
+                университетского технологического предпринимательства"
+                федерального проекта "Технологии"
+              </p>
+            </div>
+            <div className="flex flex-col mb-7 sm:mb-10">
+              <img
+                src={fund}
+                alt="Фонд содействия инновациям"
+                className="mx-auto mb-7 h-40 w-auto flex-shrink-0 rounded-2xl object-contain  sm:mx-0 sm:h-36 lg:h-48"
+              />
+              <img
+                src={technologies}
+                alt="Фонд содействия инновациям"
+                className="mx-auto h-40 w-auto flex-shrink-0 rounded-2xl object-contain bg-[#000000] sm:mx-0 sm:h-36 lg:h-48"
+              />
+            </div>
+          </div>
           <div>
             <p className="mb-3 text-[16px] font-bold uppercase tracking-[0.18em] text-[#35ae86]">
               Наш подход
@@ -314,8 +284,7 @@ function Home() {
             </h2>
           </div>
           <p className="max-w-[340px] text-[16px] text-sm leading-6 text-[#6d7773]">
-            Мы объединяем медицинскую экспертизу, технологичность и человеческое
-            отношение
+            Мы объединяем инженерную экспертизу, модульность и внимание к задачам клиента
           </p>
         </div>
         <div className="grid gap-px overflow-hidden text-[16px] rounded-3xl bg-[#d8dfdc] md:grid-cols-2 lg:grid-cols-4">
@@ -343,9 +312,9 @@ function Home() {
               Есть вопросы?
             </p>
             <h2 className="max-w-[540px] text-3xl font-semibold leading-tight tracking-[-.04em] text-white sm:text-4xl">
-              Давайте найдём решение,
+              Давайте подберём конфигурацию,
               <br />
-              которое подойдёт именно вам
+              которая подойдёт именно вам
             </h2>
           </div>
           <Link
@@ -361,16 +330,21 @@ function Home() {
 }
 
 function Catalog() {
-  const [items, setItems] = useState(fallbackProstheses);
+  const [items, setItems] = useState(fallbackRobots);
   const [selected, setSelected] = useState(null);
   const [loading, setLoading] = useState(true);
+
   useEffect(() => {
-    fetch(`${API_URL}/prostheses/`)
+    fetch(`${API_URL}/robots/`)
       .then((res) => (res.ok ? res.json() : Promise.reject()))
-      .then((data) => setItems(data.length ? data : fallbackProstheses))
-      .catch(() => setItems(fallbackProstheses))
+      .then((data) => {
+        const list = Array.isArray(data) ? data : data.results ?? [];
+        setItems(list.length ? list : fallbackRobots);
+      })
+      .catch(() => setItems(fallbackRobots))
       .finally(() => setLoading(false));
   }, []);
+
   return (
     <section className="mx-auto max-w-[1240px] px-5 py-16 lg:px-8 lg:py-24">
       <div className="mb-12 max-w-[1000px]">
@@ -378,11 +352,13 @@ function Catalog() {
           Каталог решений
         </p>
         <h1 className="text-5xl font-semibold leading-[1.02] tracking-[-.06em] sm:text-7xl">
-          Найдите своё<span className="text-[#35b88e]"> движение</span>
+          Найдите своё<span className="text-[#35b88e]"> решение</span>
         </h1>
-        <p className="mt-6 max-w-[480px] text-[16px] text-base leading-7 text-[#6d7773]">
-          Каждый протез создаётся, чтобы стать естественной частью вашей жизни.
-          Выберите направление — мы расскажем подробнее
+        <p className="mt-6 max-w-[520px] text-[16px] text-base leading-7 text-[#6d7773]">
+          Каждая платформа создаётся, чтобы стать надёжным инструментом
+          мониторинга и поддержки на воде. Выберите направление — мы расскажем
+          подробнее. А если нужного решения нет в каталоге — разработаем его
+          под ваш запрос
         </p>
       </div>
       <div className="mb-7 flex items-center justify-between border-b border-[#dce3df] pb-4 text-sm text-[#7b8581]">
@@ -448,10 +424,10 @@ function ProductCard({ item, index, onClick }) {
 function ProductVisual({ category }) {
   return (
     <div
-      className={`relative flex h-full w-full items-center justify-center ${category === "arms" ? "bg-[#dceae4]" : category === "cosmetic" ? "bg-[#e8e1dd]" : "bg-[#e0ebe5]"}`}
+      className={`relative flex h-full w-full items-center justify-center ${category === "rescue" ? "bg-[#dceae4]" : category === "sensors" ? "bg-[#e8e1dd]" : "bg-[#e0ebe5]"}`}
     >
       <div
-        className={`relative ${category === "arms" ? "h-[170px] w-[100px] rounded-[55px_55px_25px_25px] bg-gradient-to-b from-[#f9fbf9] to-[#849f92]" : category === "cosmetic" ? "h-[185px] w-[110px] rounded-[50%_50%_25px_25px] bg-gradient-to-br from-[#efd5c7] to-[#ad8270]" : "h-[190px] w-[96px] rounded-[50px_50px_20px_20px] bg-gradient-to-br from-[#f5faf6] to-[#719487]"}`}
+        className={`relative ${category === "rescue" ? "h-[170px] w-[100px] rounded-[55px_55px_25px_25px] bg-gradient-to-b from-[#f9fbf9] to-[#849f92]" : category === "sensors" ? "h-[185px] w-[110px] rounded-[50%_50%_25px_25px] bg-gradient-to-br from-[#efd5c7] to-[#ad8270]" : "h-[190px] w-[96px] rounded-[50px_50px_20px_20px] bg-gradient-to-br from-[#f5faf6] to-[#719487]"}`}
       >
         <div className="absolute bottom-[-55px] left-1/2 h-[75px] w-12 -translate-x-1/2 rounded-b-2xl bg-gradient-to-b from-[#91aa9e] to-[#526e63]" />
       </div>
@@ -467,17 +443,40 @@ function ProductModal({ item, onClose }) {
       document.body.style.overflow = "";
     };
   }, []);
+
+  const specs = [
+    { label: "Длина", value: item.length_m != null ? `${item.length_m} м` : null },
+    { label: "Ширина", value: item.width_m != null ? `${item.width_m} м` : null },
+    { label: "Масса", value: item.weight_kg != null ? `${item.weight_kg} кг` : null },
+    { label: "Макс. скорость", value: item.max_speed_kmh != null ? `${item.max_speed_kmh} км/ч` : null },
+    { label: "Автономность", value: item.autonomy_hours != null ? `${item.autonomy_hours} ч` : null },
+    { label: "Запас хода", value: item.range_km != null ? `${item.range_km} км` : null },
+    { label: "Полезная нагрузка", value: item.payload_kg != null ? `${item.payload_kg} кг` : null },
+    { label: "Дальность управления", value: item.control_range_km != null ? `${item.control_range_km} км` : null },
+    { label: "Ёмкость АКБ", value: item.battery_capacity_mah != null ? `${item.battery_capacity_mah} мА·ч` : null },
+    { label: "Класс защиты", value: item.ip_rating ?? null },
+    { label: "Мин. температура", value: item.min_temperature_c != null ? `+${item.min_temperature_c} °C` : null },
+    { label: "Макс. ветер", value: item.max_wind_ms != null ? `${item.max_wind_ms} м/с` : null },
+  ].filter((s) => s.value);
+
+  const modules = [
+    { label: "Видеокамера", enabled: item.supports_camera },
+    { label: "Датчики качества воды", enabled: item.supports_water_sensors },
+    { label: "Свето-звуковой маяк", enabled: item.supports_beacon },
+    { label: "Буксировка лёгких предметов", enabled: item.supports_tug },
+  ].filter((m) => m.enabled);
+
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-[#15231e]/50 p-4 backdrop-blur-sm"
       onClick={onClose}
     >
       <div
-        className="max-h-[90vh] w-full max-w-[800px] overflow-y-auto rounded-[28px] bg-[#f5f6f5] shadow-2xl"
+        className="max-h-[90vh] w-full max-w-[860px] overflow-y-auto rounded-[28px] bg-[#f5f6f5] shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="relative grid md:grid-cols-[.85fr_1.15fr]">
-          <div className="flex min-h-[270px] items-center justify-center bg-[#dfeae5] md:min-h-[500px]">
+          <div className="relative flex min-h-[270px] items-center justify-center bg-[#dfeae5] md:min-h-[560px]">
             {item.image ? (
               <img
                 src={item.image}
@@ -487,7 +486,11 @@ function ProductModal({ item, onClose }) {
             ) : (
               <ProductVisual category={item.category} />
             )}
+            <span className="absolute left-4 top-4 rounded-full bg-white/80 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-[#5f7069] backdrop-blur">
+              {item.category_label ?? getCategoryLabel(item.category)}
+            </span>
           </div>
+
           <div className="p-7 sm:p-10">
             <button
               onClick={onClose}
@@ -495,19 +498,63 @@ function ProductModal({ item, onClose }) {
             >
               <X size={17} />
             </button>
+
             <p className="text-[10px] font-bold uppercase tracking-[.18em] text-[#30a980]">
-              {getCategoryLabel(item.category)}
+              {item.category_label ?? getCategoryLabel(item.category)}
             </p>
             <h2 className="mt-4 text-4xl font-semibold tracking-[-.05em]">
               {item.name}
             </h2>
-            <p className="mt-6 text-[15px] leading-7 text-[#68736e]">
+
+            <p className="mt-5 text-[15px] leading-7 text-[#68736e]">
               {item.full_description}
             </p>
-            {item.price && (
-              <p className="mt-7 text-2xl font-semibold">{item.price} ₽</p>
+
+            {specs.length > 0 && (
+              <div className="mt-8">
+                <p className="mb-3 text-[10px] font-bold uppercase tracking-[.18em] text-[#30a980]">
+                  Характеристики
+                </p>
+                <div className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl bg-[#dce3df] text-[13px]">
+                  {specs.map((s) => (
+                    <div
+                      key={s.label}
+                      className="flex items-center justify-between gap-2 bg-[#f5f6f5] px-4 py-3"
+                    >
+                      <span className="text-[#7b8581]">{s.label}</span>
+                      <span className="font-semibold text-[#2d2d2d]">
+                        {s.value}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
             )}
-            <div className="mt-9 border-t border-[#dce3df] pt-7">
+
+            {modules.length > 0 && (
+              <div className="mt-7">
+                <p className="mb-3 text-[10px] font-bold uppercase tracking-[.18em] text-[#30a980]">
+                  Сменные модули
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {modules.map((m) => (
+                    <span
+                      key={m.label}
+                      className="inline-flex items-center gap-1.5 rounded-full bg-[#d8f8eb] px-3 py-1.5 text-[12px] font-semibold text-[#1e7a5c]"
+                    >
+                      <CircleCheck size={13} />
+                      {m.label}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {item.price && (
+              <p className="mt-8 text-2xl font-semibold">{item.price} ₽</p>
+            )}
+
+            <div className="mt-8 border-t border-[#dce3df] pt-7">
               <p className="mb-4 text-xs text-[#76817c]">
                 Хотите узнать, подходит ли это решение именно вам?
               </p>
@@ -533,19 +580,20 @@ function About() {
     <section className="mx-auto max-w-[1240px] px-5 py-16 lg:px-8 lg:py-24">
       <div className="grid gap-14 lg:grid-cols-[.8fr_1.2fr] lg:items-end">
         <div>
-          <p className="mb-4 text-[12px] font-bold uppercase tracking-[.18em] text-[#35ae86]">
+          <p className="mb-4 text-[14px] font-bold uppercase tracking-[.18em] text-[#35ae86]">
             О компании
           </p>
           <h1 className="text-5xl font-semibold leading-[1.02] tracking-[-.06em] sm:text-7xl">
-            Человечность
+            Технологии
             <br />
-            <span className="text-[#35b88e]">в каждом шаге</span>
+            <span className="text-[#35b88e]">для реальных задач</span>
           </h1>
         </div>
         <p className="max-w-[470px] text-base leading-8 text-[#68746e]">
-          Робо-решения — это место, где технологии встречаются с вниманием. Мы
-          верим, что хороший протез — не просто медицинское изделие, а
-          инструмент для возвращения к любимым делам
+          Робо-решения — это команда, которая занимается разработкой
+          высокотехнологичных роботизированных устройств. Мы создаём компактные
+          модульные платформы, способные решать задачи мониторинга, контроля и
+          поддержки в самых разных сферах
         </p>
       </div>
       <div className="mt-16 grid gap-5 md:grid-cols-2">
@@ -555,7 +603,7 @@ function About() {
               Наша философия
             </span>
             <p className="mt-4 max-w-[320px] text-2xl font-semibold leading-tight tracking-[-.04em] text-[#395248]">
-              Слушать. Понимать. Помогать двигаться дальше.
+              Создавать технологии, которые помогают людям и среде.
             </p>
           </div>
         </div>
@@ -570,14 +618,10 @@ function About() {
           </div>
         </div>
       </div>
-      <div className="mt-16 grid gap-5 border-t border-[#dce3df] pt-12 sm:grid-cols-3">
-        <Stat value="10+" label="лет создаём решения" />
-        <Stat value="800" label="людей доверились нам" />
-        <Stat value="24/7" label="остаёмся на связи" />
-      </div>
     </section>
   );
 }
+
 function Stat({ value, label }) {
   return (
     <div>
@@ -594,7 +638,7 @@ function Contacts() {
     <section className="mx-auto max-w-[1240px] px-5 py-16 lg:px-8 lg:py-24">
       <div className="grid gap-14 lg:grid-cols-[.8fr_1.2fr] lg:items-start">
         <div>
-          <p className="mb-4 text-[12px] font-bold uppercase tracking-[.18em] text-[#35ae86]">
+          <p className="mb-4 text-[14px] font-bold uppercase tracking-[.18em] text-[#35ae86]">
             Контакты
           </p>
           <h1 className="text-5xl font-semibold leading-[1.02] tracking-[-.06em] sm:text-7xl">
@@ -641,10 +685,10 @@ function Contacts() {
               <div>
                 <p className="text-sm font-semibold">Email</p>
                 <a
-                  href="mailto:hello@forma.pro"
+                  href="mailto:hello@robo.pro"
                   className="text-base hover:text-[#2ca77f] transition"
                 >
-                  hello@forma.pro
+                  hello@robo.pro
                 </a>
               </div>
             </div>
@@ -680,14 +724,16 @@ function Footer() {
     <footer className="border-t border-[#dce3df] bg-[#eef2ef]">
       <div className="mx-auto flex max-w-[1240px] flex-col gap-7 px-5 py-10 sm:flex-row sm:items-center sm:justify-between lg:px-8">
         <Link to="/" className="flex items-center gap-3">
-          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#5cedb8] text-[#174b3d]">
-            <Asterisk size={20} />
-          </span>
+          <img
+            src={robologo}
+            alt="Робо-решения"
+            className="h-20 w-20 rounded-xl object-contain"
+          />
           <span className="font-bold">
             Робо-решения<span className="text-[#43c99d]">.</span>
           </span>
         </Link>
-        <div className="flex flex-wrap gap-x-6 gap-y-3 text-xs text-[#7a8580]">
+        <div className="flex flex-wrap gap-x-6 gap-y-3 text-[14px] text-[#7a8580]">
           <Link to="/catalog" className="transition hover:text-[#219871]">
             Каталог
           </Link>
@@ -699,7 +745,7 @@ function Footer() {
           </Link>
         </div>
         <p className="text-xs text-[#9aa39f]">
-          © 2026 Робо-решения. Движение — это свобода.
+          © 2026 Робо-решения. Технологии для реальных задач.
         </p>
       </div>
     </footer>

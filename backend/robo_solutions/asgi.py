@@ -1,5 +1,5 @@
 """
-ASGI config for prosthetics_shop project.
+ASGI config for robo_solutions project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'prosthetics_shop.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'robo_solutions.settings')
 
 application = get_asgi_application()
