@@ -11,8 +11,11 @@ class Robot(models.Model):
     name = models.CharField(max_length=200, verbose_name="Название")
     short_description = models.CharField(max_length=300, verbose_name="Краткое описание")
     full_description = models.TextField(verbose_name="Полное описание")
-    image = models.ImageField(
-        upload_to="robots/", verbose_name="Изображение", null=True, blank=True
+    image_url = models.URLField(
+        "Ссылка на фото",
+        max_length=500,
+        blank=True,
+        help_text="Прямая ссылка на изображение, например: https://i.imgur.com/abc.jpg",
     )
     category = models.CharField(
         max_length=20,
@@ -26,6 +29,12 @@ class Robot(models.Model):
         null=True,
         blank=True,
         verbose_name="Цена",
+    )
+    gallery = models.JSONField(
+        "Галерея (ссылки на изображения)",
+        default=list,
+        blank=True,
+        help_text="Список URL изображений, например: [\"/media/robots/1.jpg\", \"/media/robots/2.jpg\"]",
     )
 
     # Габариты и масса
@@ -65,3 +74,31 @@ class Robot(models.Model):
 
     def __str__(self):
         return self.name
+
+class Post(models.Model):
+    title = models.CharField("Заголовок", max_length=200)
+    short_description = models.CharField(
+        "Краткое описание", max_length=300, blank=True
+    )
+    full_description = models.TextField("Полный текст")
+
+    image_url = models.URLField(
+        "Ссылка на фото",
+        max_length=500,
+        blank=True,
+        help_text="Прямая ссылка на изображение, например: https://i.imgur.com/abc.jpg",
+    )
+
+    created_at = models.DateTimeField("Создано", auto_now_add=True)
+    updated_at = models.DateTimeField("Обновлено", auto_now=True)
+    published_at = models.DateTimeField("Дата публикации", null=True, blank=True)
+    is_published = models.BooleanField("Опубликовано", default=True)
+    order = models.PositiveIntegerField("Порядок", default=0)
+
+    class Meta:
+        verbose_name = "Пост"
+        verbose_name_plural = "Посты"
+        ordering = ["-published_at", "-created_at", "order", "id"]
+
+    def __str__(self):
+        return self.title

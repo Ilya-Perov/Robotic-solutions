@@ -2,7 +2,7 @@
 set -e
 
 echo "→ Выравниваем права на volume..."
-chown -R appuser:appuser /app/media /app/staticfiles /app/data
+chown -R appuser:appuser /app/media /app/staticfiles
 
 echo "→ Ожидаем доступности базы данных..."
 
@@ -13,11 +13,6 @@ if [ -n "$DB_PASSWORD" ]; then
         sleep 1
     done
     echo "✓ PostgreSQL доступна"
-fi
-
-# Проверка SQLite (для development)
-if [ -f "/app/data/db.sqlite3" ]; then
-    echo "✓ SQLite база найдена"
 fi
 
 echo "→ Применяем миграции..."

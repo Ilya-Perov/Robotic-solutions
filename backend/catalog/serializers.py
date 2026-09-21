@@ -1,9 +1,8 @@
 from rest_framework import serializers
-from .models import Robot
+from .models import Robot, Post
 
 
 class RobotSerializer(serializers.ModelSerializer):
-    image = serializers.SerializerMethodField()
     category_label = serializers.CharField(source="get_category_display", read_only=True)
 
     class Meta:
@@ -13,10 +12,11 @@ class RobotSerializer(serializers.ModelSerializer):
             "name",
             "short_description",
             "full_description",
-            "image",
+            "image_url",
             "category",
             "category_label",
             "price",
+            "gallery",
             "length_m",
             "width_m",
             "weight_kg",
@@ -35,18 +35,29 @@ class RobotSerializer(serializers.ModelSerializer):
             "supports_tug",
         ]
 
-    def get_image(self, obj):
-        request = self.context.get("request")
-        if obj.image:
-            url = obj.image.url
-            if request:
-                return request.build_absolute_uri(url)
-            return url
-        return None
-
 
 class ContactRequestSerializer(serializers.Serializer):
     name = serializers.CharField(max_length=200)
     phone = serializers.CharField(max_length=50)
     email = serializers.EmailField()
     message = serializers.CharField(required=False, allow_blank=True)
+
+class PostSerializer(serializers.ModelSerializer):
+    created_at = serializers.DateTimeField(format="%d.%m.%Y", read_only=True)
+    updated_at = serializers.DateTimeField(format="%d.%m.%Y", read_only=True)
+    published_at = serializers.DateTimeField(format="%d.%m.%Y", read_only=True)
+
+    class Meta:
+        model = Post
+        fields = [
+            "id",
+            "title",
+            "short_description",
+            "full_description",
+            "image_url",
+            "created_at",
+            "updated_at",
+            "published_at",
+            "is_published",
+            "order",
+        ]

@@ -10,6 +10,7 @@ import {
 import {
   ArrowRight,
   BadgeCheck,
+  Calendar,
   ChevronRight,
   CircleCheck,
   Clock3,
@@ -28,7 +29,8 @@ import {
 
 import fund from "./assets/Fund.png";
 import technologies from "./assets/FP_Technologies_Logo.png";
-import robologo from "./assets/Robo_Logo_orig.png";
+import robologo from "./assets/Robo_Logo_Orig.png";
+import philosophyBg from "./assets/Philosophy_BG.png";
 
 const API_URL = "/api";
 
@@ -43,7 +45,7 @@ const fallbackRobots = [
     category: "monitoring",
     category_label: "Мониторинг",
     price: null,
-    image: null,
+    image_url: null,
     length_m: 2.0,
     width_m: 1.0,
     weight_kg: 12,
@@ -60,6 +62,36 @@ const fallbackRobots = [
     supports_water_sensors: true,
     supports_beacon: true,
     supports_tug: true,
+    gallery: [fund, technologies],
+  },
+];
+
+const fallbackPosts = [
+  {
+    id: 1,
+    title: "Первые испытания на воде",
+    short_description: "Тестируем платформу в реальных условиях.",
+    full_description:
+      "Мы провели серию испытаний на внутреннем водоёме. Платформа показала устойчивость на мелководье и при ветре до 6 м/с. В рамках тестов проверили работу сменных модулей и автономность хода.",
+    image: null,
+    created_at: "01.09.2026",
+    updated_at: "01.09.2026",
+    published_at: "05.09.2026",
+    is_published: true,
+    order: 0,
+  },
+  {
+    id: 2,
+    title: "Модуль датчиков качества воды",
+    short_description: "Новый сменный модуль для EcoPatrol One.",
+    full_description:
+      "Мы разработали модуль, который крепится на штатные крепления и передаёт данные о состоянии воды в реальном времени. Устанавливается последовательно, в зависимости от приоритетов и финансовых возможностей.",
+    image: null,
+    created_at: "10.09.2026",
+    updated_at: "10.09.2026",
+    published_at: "12.09.2026",
+    is_published: true,
+    order: 0,
   },
 ];
 
@@ -76,8 +108,8 @@ const benefits = [
   },
   {
     icon: Sparkles,
-    title: "Современные материалы",
-    text: "Используем современные материалы и элементы 3D-печати — устройства лёгкие, ремонтопригодные и совместимые с модульными креплениями",
+    title: "Современные композитные материалы",
+    text: "Используем современные материалы и элементы 3D-печати совместимые с различными модулями",
   },
   {
     icon: ShieldCheck,
@@ -94,6 +126,15 @@ function getCategoryLabel(category) {
       sensors: "Датчики и модули",
     }[category] || "Модуль"
   );
+}
+
+function pluralize(count, forms) {
+  const n = Math.abs(count) % 100;
+  const n1 = n % 10;
+  if (n > 10 && n < 20) return forms[2];
+  if (n1 > 1 && n1 < 5) return forms[1];
+  if (n1 === 1) return forms[0];
+  return forms[2];
 }
 
 function App() {
@@ -120,13 +161,14 @@ function Site() {
               alt="Робо-решения"
               className="h-20 w-20 rounded-[16px] object-contain transition-transform group-hover:rotate-2"
             />
-            <span className="text-[17px] font-bold tracking-[-0.03em]">
+            <span className="text-[24px] font-bold tracking-[-0.03em]">
               Робо-решения<span className="text-[#43c99d]">.</span>
             </span>
           </Link>
           <nav className="hidden items-center text-[16px] gap-8 md:flex">
             <NavItem to="/">Главная</NavItem>
             <NavItem to="/catalog">Каталог</NavItem>
+            <NavItem to="/posts">Посты</NavItem>  
             <NavItem to="/about">О компании</NavItem>
             <NavItem to="/contacts">Контакты</NavItem>
           </nav>
@@ -156,6 +198,9 @@ function Site() {
               <NavItem to="/about" onClick={() => setMobileOpen(false)}>
                 О компании
               </NavItem>
+              <NavItem to="/posts" onClick={() => setMobileOpen(false)}>
+                Посты
+              </NavItem>
               <NavItem to="/contacts" onClick={() => setMobileOpen(false)}>
                 Контакты
               </NavItem>
@@ -175,6 +220,7 @@ function Site() {
           <Route path="/" element={<Home />} />
           <Route path="/catalog" element={<Catalog />} />
           <Route path="/about" element={<About />} />
+          <Route path="/posts" element={<Posts />} />
           <Route path="/contacts" element={<Contacts />} />
         </Routes>
       </main>
@@ -293,7 +339,7 @@ function Home() {
               key={title}
               className="bg-[#f5f6f5] p-7 transition hover:bg-white"
             >
-              <div className="mb-12 flex h-11 w-11 items-center justify-center rounded-2xl bg-[#d8f8eb] text-[#299e79]">
+              <div className="mb-12 flex h-11 w-11 items-center justify-center rounded-2xl bg-[#d8f8eb] text-[#000]">
                 <Icon size={21} />
               </div>
               <span className="text-[12px] font-bold text-[#9aa49f]">
@@ -364,8 +410,8 @@ function Catalog() {
       <div className="mb-7 flex items-center justify-between border-b border-[#dce3df] pb-4 text-sm text-[#7b8581]">
         <span>
           {loading
-            ? "Загружаем решения…"
-            : `${items.length} решений в каталоге`}
+            ? "Загружаем продукты…"
+            : `${items.length} ${pluralize(items.length, ["продукт", "продукта", "продуктов"])} в каталоге`}
         </span>
         <span className="hidden items-center gap-2 sm:flex">
           <span className="h-2 w-2 rounded-full bg-[#5cedb8]" /> Доступна
@@ -397,9 +443,9 @@ function ProductCard({ item, index, onClick }) {
       style={{ animationDelay: `${index * 70}ms` }}
     >
       <div className="relative mb-4 flex h-[270px] items-center justify-center overflow-hidden rounded-[24px] bg-[#e2ebe6] transition duration-300 group-hover:scale-[1.015] group-hover:bg-[#d7e8df]">
-        {item.image ? (
+        {item.image_url ? (
           <img
-            src={item.image}
+            src={item.image_url}
             alt={item.name}
             className="h-full w-full object-cover"
           />
@@ -437,12 +483,36 @@ function ProductVisual({ category }) {
 
 function ProductModal({ item, onClose }) {
   const navigate = useNavigate();
+  const [tab, setTab] = useState("overview");
+  const [lightbox, setLightbox] = useState(null); // индекс открытой картинки или null
+
   useEffect(() => {
     document.body.style.overflow = "hidden";
     return () => {
       document.body.style.overflow = "";
     };
   }, []);
+
+  useEffect(() => {
+    if (tab === "gallery" && !(item.gallery && item.gallery.length > 0)) {
+      setTab("overview");
+    }
+  }, [item, tab]);
+
+  const gallery = Array.isArray(item.gallery) ? item.gallery.filter(Boolean) : [];
+  const hasGallery = gallery.length > 0;
+
+  // Клавиатура для лайтбокса
+  useEffect(() => {
+    if (lightbox === null) return;
+    const onKey = (e) => {
+      if (e.key === "Escape") setLightbox(null);
+      if (e.key === "ArrowRight") setLightbox((i) => (i + 1) % gallery.length);
+      if (e.key === "ArrowLeft") setLightbox((i) => (i - 1 + gallery.length) % gallery.length);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [lightbox, gallery.length]);
 
   const specs = [
     { label: "Длина", value: item.length_m != null ? `${item.length_m} м` : null },
@@ -467,111 +537,240 @@ function ProductModal({ item, onClose }) {
   ].filter((m) => m.enabled);
 
   return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-[#15231e]/50 p-4 backdrop-blur-sm"
-      onClick={onClose}
-    >
+    <>
       <div
-        className="max-h-[90vh] w-full max-w-[860px] overflow-y-auto rounded-[28px] bg-[#f5f6f5] shadow-2xl"
-        onClick={(e) => e.stopPropagation()}
+        className="fixed inset-0 z-50 flex items-center justify-center bg-[#15231e]/50 p-4 backdrop-blur-sm"
+        onClick={onClose}
       >
-        <div className="relative grid md:grid-cols-[.85fr_1.15fr]">
-          <div className="relative flex min-h-[270px] items-center justify-center bg-[#dfeae5] md:min-h-[560px]">
-            {item.image ? (
-              <img
-                src={item.image}
-                alt={item.name}
-                className="h-full w-full object-cover"
-              />
-            ) : (
-              <ProductVisual category={item.category} />
-            )}
-            <span className="absolute left-4 top-4 rounded-full bg-white/80 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-[#5f7069] backdrop-blur">
-              {item.category_label ?? getCategoryLabel(item.category)}
-            </span>
-          </div>
+        <div
+          className="max-h-[90vh] w-full max-w-[860px] overflow-y-auto rounded-[28px] bg-[#f5f6f5] shadow-2xl"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className="relative grid md:grid-cols-[.85fr_1.15fr]">
+            {/* Левая колонка — превью */}
+            <div className="relative flex aspect-square items-center justify-center overflow-hidden bg-[#dfeae5] rounded-[28px]">
+              {item.image_url ? (
+                <img
+                  src={item.image_url}
+                  alt={item.name}
+                  className="h-full w-full object-cover"
+                />
+              ) : (
+                <ProductVisual category={item.category} />
+              )}
+              <span className="absolute left-4 top-4 rounded-full bg-white/80 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-[#5f7069] backdrop-blur">
+                {item.category_label ?? getCategoryLabel(item.category)}
+              </span>
+            </div>
 
-          <div className="p-7 sm:p-10">
-            <button
-              onClick={onClose}
-              className="absolute right-5 top-5 flex h-9 w-9 items-center justify-center rounded-full bg-white/80 text-[#58635e] transition hover:bg-[#5cedb8]"
-            >
-              <X size={17} />
-            </button>
-
-            <p className="text-[10px] font-bold uppercase tracking-[.18em] text-[#30a980]">
-              {item.category_label ?? getCategoryLabel(item.category)}
-            </p>
-            <h2 className="mt-4 text-4xl font-semibold tracking-[-.05em]">
-              {item.name}
-            </h2>
-
-            <p className="mt-5 text-[15px] leading-7 text-[#68736e]">
-              {item.full_description}
-            </p>
-
-            {specs.length > 0 && (
-              <div className="mt-8">
-                <p className="mb-3 text-[10px] font-bold uppercase tracking-[.18em] text-[#30a980]">
-                  Характеристики
-                </p>
-                <div className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl bg-[#dce3df] text-[13px]">
-                  {specs.map((s) => (
-                    <div
-                      key={s.label}
-                      className="flex items-center justify-between gap-2 bg-[#f5f6f5] px-4 py-3"
-                    >
-                      <span className="text-[#7b8581]">{s.label}</span>
-                      <span className="font-semibold text-[#2d2d2d]">
-                        {s.value}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {modules.length > 0 && (
-              <div className="mt-7">
-                <p className="mb-3 text-[10px] font-bold uppercase tracking-[.18em] text-[#30a980]">
-                  Сменные модули
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {modules.map((m) => (
-                    <span
-                      key={m.label}
-                      className="inline-flex items-center gap-1.5 rounded-full bg-[#d8f8eb] px-3 py-1.5 text-[12px] font-semibold text-[#1e7a5c]"
-                    >
-                      <CircleCheck size={13} />
-                      {m.label}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {item.price && (
-              <p className="mt-8 text-2xl font-semibold">{item.price} ₽</p>
-            )}
-
-            <div className="mt-8 border-t border-[#dce3df] pt-7">
-              <p className="mb-4 text-xs text-[#76817c]">
-                Хотите узнать, подходит ли это решение именно вам?
-              </p>
+            {/* Правая колонка */}
+            <div className="p-7 sm:p-10">
               <button
-                onClick={() => {
-                  onClose();
-                  navigate("/contacts");
-                }}
-                className="flex w-full items-center justify-center gap-3 rounded-full bg-[#2d2d2d] px-5 py-4 text-sm font-bold text-white transition hover:bg-[#174b3d]"
+                onClick={onClose}
+                className="absolute right-5 top-5 flex h-9 w-9 items-center justify-center rounded-full bg-white/80 text-[#58635e] transition hover:bg-[#5cedb8]"
               >
-                Оставить заявку
+                <X size={17} />
               </button>
+
+              <p className="text-[10px] font-bold uppercase tracking-[.18em] text-[#30a980]">
+                {item.category_label ?? getCategoryLabel(item.category)}
+              </p>
+              <h2 className="mt-4 text-4xl font-semibold tracking-[-.05em]">
+                {item.name}
+              </h2>
+
+              {/* Вкладки */}
+              {hasGallery && (
+                <div className="mt-6 flex gap-2 border-b border-[#dce3df]">
+                  <button
+                    onClick={() => setTab("overview")}
+                    className={`relative px-4 py-2 text-sm font-semibold transition ${
+                      tab === "overview"
+                        ? "text-[#16936b]"
+                        : "text-[#7b8581] hover:text-[#2d2d2d]"
+                    }`}
+                  >
+                    Обзор
+                    {tab === "overview" && (
+                      <span className="absolute inset-x-2 -bottom-px h-0.5 rounded-full bg-[#5cedb8]" />
+                    )}
+                  </button>
+                  <button
+                    onClick={() => setTab("gallery")}
+                    className={`relative px-4 py-2 text-sm font-semibold transition ${
+                      tab === "gallery"
+                        ? "text-[#16936b]"
+                        : "text-[#7b8581] hover:text-[#2d2d2d]"
+                    }`}
+                  >
+                    Галерея
+                    <span className="ml-1.5 rounded-full bg-[#d8f8eb] px-1.5 py-0.5 text-[10px] font-bold text-[#1e7a5c]">
+                      {gallery.length}
+                    </span>
+                    {tab === "gallery" && (
+                      <span className="absolute inset-x-2 -bottom-px h-0.5 rounded-full bg-[#5cedb8]" />
+                    )}
+                  </button>
+                </div>
+              )}
+
+              {/* Вкладка «Обзор» */}
+              {tab === "overview" && (
+                <>
+                  <p className="mt-5 text-[15px] leading-7 text-[#68736e]">
+                    {item.full_description}
+                  </p>
+
+                  {specs.length > 0 && (
+                    <div className="mt-8">
+                      <p className="mb-3 text-[10px] font-bold uppercase tracking-[.18em] text-[#30a980]">
+                        Характеристики
+                      </p>
+                      <div className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl bg-[#dce3df] text-[13px]">
+                        {specs.map((s) => (
+                          <div
+                            key={s.label}
+                            className="flex items-center justify-between gap-2 bg-[#f5f6f5] px-4 py-3"
+                          >
+                            <span className="text-[#7b8581]">{s.label}</span>
+                            <span className="font-semibold text-[#2d2d2d]">
+                              {s.value}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {modules.length > 0 && (
+                    <div className="mt-7">
+                      <p className="mb-3 text-[10px] font-bold uppercase tracking-[.18em] text-[#30a980]">
+                        Сменные модули
+                      </p>
+                      <div className="flex flex-wrap gap-2">
+                        {modules.map((m) => (
+                          <span
+                            key={m.label}
+                            className="inline-flex items-center gap-1.5 rounded-full bg-[#d8f8eb] px-3 py-1.5 text-[12px] font-semibold text-[#1e7a5c]"
+                          >
+                            <CircleCheck size={13} />
+                            {m.label}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {item.price && (
+                    <p className="mt-8 text-2xl font-semibold">{item.price} ₽</p>
+                  )}
+                </>
+              )}
+
+              {/* Вкладка «Галерея» */}
+              {tab === "gallery" && hasGallery && (
+                <div className="mt-6">
+                  <p className="mb-4 text-[10px] font-bold uppercase tracking-[.18em] text-[#30a980]">
+                    Галерея · {gallery.length}
+                  </p>
+                  <div className="flex flex-col gap-3">
+  {gallery.map((url, i) => (
+    <button
+      key={`${url}-${i}`}
+      type="button"
+      onClick={() => setLightbox(i)}
+      className="group relative w-full overflow-hidden rounded-2xl bg-[#dfeae5] ring-1 ring-black/[0.04] transition hover:ring-[#5cedb8]"
+    >
+      <img
+        src={url}
+        alt={`${item.name} — фото ${i + 1}`}
+        loading="lazy"
+        className="h-auto w-full object-contain transition duration-300 group-hover:scale-[1.02]"
+      />
+    </button>
+  ))}
+</div>
+                </div>
+              )}
+
+              {/* Кнопка заявки */}
+              <div className="mt-8 border-t border-[#dce3df] pt-7">
+                <p className="mb-4 text-xs text-[#76817c]">
+                  Хотите узнать, подходит ли это решение именно вам?
+                </p>
+                <button
+                  onClick={() => {
+                    onClose();
+                    navigate("/contacts");
+                  }}
+                  className="flex w-full items-center justify-center gap-3 rounded-full bg-[#2d2d2d] px-5 py-4 text-sm font-bold text-white transition hover:bg-[#174b3d]"
+                >
+                  Оставить заявку
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+
+      {/* Лайтбокс */}
+      {lightbox !== null && gallery[lightbox] && (
+        <div
+          className="fixed inset-0 z-[60] flex items-center justify-center bg-black/85 p-4 backdrop-blur-sm"
+          onClick={() => setLightbox(null)}
+        >
+          {/* Крестик */}
+          <button
+            onClick={() => setLightbox(null)}
+            className="absolute right-5 top-5 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20"
+            aria-label="Закрыть"
+          >
+            <X size={20} />
+          </button>
+
+          {/* Счётчик */}
+          <span className="absolute left-5 top-5 rounded-full bg-white/10 px-3 py-1.5 text-xs font-semibold text-white">
+            {lightbox + 1} / {gallery.length}
+          </span>
+
+          {/* Стрелка влево */}
+          {gallery.length > 1 && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setLightbox((i) => (i - 1 + gallery.length) % gallery.length);
+              }}
+              className="absolute left-4 flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20"
+              aria-label="Предыдущая"
+            >
+              <ChevronRight size={22} className="rotate-180" />
+            </button>
+          )}
+
+          {/* Картинка */}
+          <img
+            src={gallery[lightbox]}
+            alt={`${item.name} — фото ${lightbox + 1}`}
+            onClick={(e) => e.stopPropagation()}
+            className="max-h-[88vh] max-w-[92vw] rounded-2xl object-contain shadow-2xl"
+          />
+
+          {/* Стрелка вправо */}
+          {gallery.length > 1 && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setLightbox((i) => (i + 1) % gallery.length);
+              }}
+              className="absolute right-4 flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20"
+              aria-label="Следующая"
+            >
+              <ChevronRight size={22} />
+            </button>
+          )}
+        </div>
+      )}
+    </>
   );
 }
 
@@ -597,28 +796,222 @@ function About() {
         </p>
       </div>
       <div className="mt-16 grid gap-5 md:grid-cols-2">
-        <div className="flex min-h-[360px] items-end rounded-[28px] border border-[#d8e1dc] bg-[#e1eae5] p-8">
-          <div>
-            <span className="text-[12px] font-bold uppercase tracking-[.16em] text-[#699181]">
-              Наша философия
-            </span>
-            <p className="mt-4 max-w-[320px] text-2xl font-semibold leading-tight tracking-[-.04em] text-[#395248]">
-              Создавать технологии, которые помогают людям и среде.
-            </p>
+        <div
+  className="relative flex min-h-[360px] items-end overflow-hidden rounded-[28px] border border-[#d8e1dc] bg-[#e1eae5] p-8"
+>
+  <div
+    className="absolute inset-0 bg-no-repeat bg-center opacity-25"
+    style={{
+      backgroundImage: `url(${philosophyBg})`,
+      backgroundSize: "auto 80%",
+    }}
+    aria-hidden="true"
+  />
+  <div className="relative z-10">
+    <span className="text-[12px] font-bold uppercase tracking-[.16em] text-[#699181]">
+      Наша философия
+    </span>
+    <p className="mt-4 max-w-[320px] text-2xl font-semibold leading-tight tracking-[-.04em] text-white [text-shadow:0_2px_8px_rgba(0,0,0,0.75)]">
+      Создавать технологии, которые помогают людям и среде.
+    </p>
+  </div>
+</div>
+        <Link
+  to="/posts"
+  className="group relative flex min-h-[360px] items-end overflow-hidden rounded-[28px] border border-[#d7d7d5] bg-[#e9e8e5] p-8 transition hover:border-[#5cedb8] hover:bg-[#e4f2ea]"
+>
+  <div>
+    <span className="text-[12px] font-bold uppercase tracking-[.16em] text-[#938f88] group-hover:text-[#35ae86]">
+      Будущее рядом
+    </span>
+    <p className="mt-4 max-w-[320px] text-2xl font-semibold leading-tight tracking-[-.04em] text-white [text-shadow:0_2px_8px_rgba(0,0,0,0.75)]">
+      Читайте наши новости и истории
+    </p>
+    <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[#35ae86]">
+      Перейти к постам
+      <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+    </span>
+  </div>
+</Link>
+      </div>
+    </section>
+  );
+}
+
+function Posts() {
+  const [items, setItems] = useState(fallbackPosts);
+  const [selected, setSelected] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch(`${API_URL}/posts/`)
+      .then((res) => (res.ok ? res.json() : Promise.reject()))
+      .then((data) => {
+        const list = Array.isArray(data) ? data : data.results ?? [];
+        setItems(list.length ? list : fallbackPosts);
+      })
+      .catch(() => setItems(fallbackPosts))
+      .finally(() => setLoading(false));
+  }, []);
+
+  return (
+    <section className="mx-auto max-w-[1240px] px-5 py-16 lg:px-8 lg:py-24">
+      <div className="mb-12 max-w-[1000px]">
+        <p className="mb-4 text-[14px] font-bold uppercase tracking-[.18em] text-[#35ae86]">
+          Новости и истории
+        </p>
+        <h1 className="text-5xl font-semibold leading-[1.02] tracking-[-.06em] sm:text-7xl">
+          Наши<span className="text-[#35b88e]"> посты</span>
+        </h1>
+        <p className="mt-6 max-w-[520px] text-[16px] leading-7 text-[#6d7773]">
+          Рассказываем о разработке, испытаниях и жизни команды
+        </p>
+      </div>
+
+      <div className="mb-7 flex items-center justify-between border-b border-[#dce3df] pb-4 text-sm text-[#7b8581]">
+        <span>
+          {loading
+            ? "Загружаем посты…"
+            : `${items.length} ${pluralize(items.length, ["пост", "поста", "постов"])}`}
+        </span>
+        <span className="hidden items-center gap-2 sm:flex">
+          <span className="h-2 w-2 rounded-full bg-[#5cedb8]" /> Обновляем регулярно
+        </span>
+      </div>
+
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {items.map((item, index) => (
+          <PostCard
+            key={item.id}
+            item={item}
+            index={index}
+            onClick={() => setSelected(item)}
+          />
+        ))}
+      </div>
+
+      {selected && (
+        <PostModal item={selected} onClose={() => setSelected(null)} />
+      )}
+    </section>
+  );
+}
+
+function PostCard({ item, index, onClick }) {
+  return (
+    <button
+      onClick={onClick}
+      className="group flex flex-col overflow-hidden rounded-[24px] border border-[#dce3df] bg-white text-left transition hover:-translate-y-1 hover:border-[#5cedb8] hover:shadow-[0_20px_50px_rgba(45,61,53,.08)] animate-fade-in"
+      style={{ animationDelay: `${index * 70}ms` }}
+    >
+      <div className="relative flex aspect-video w-full items-center justify-center overflow-hidden bg-[#dfeae5]">
+        {item.image_url ? (
+          <img
+            src={item.image_url}
+            alt={item.title}
+            className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
+          />
+        ) : (
+          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-[#e1eae5] to-[#c6d7d0] text-[#4a6258]">
+            <Sparkles size={32} />
           </div>
+        )}
+        <span className="absolute bottom-4 right-4 flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#2d2d2d] shadow-sm transition group-hover:bg-[#5cedb8] group-hover:text-[#174b3d]">
+          <Plus size={18} />
+        </span>
+      </div>
+
+      <div className="flex flex-1 flex-col p-6">
+        {(item.published_at || item.created_at) && (
+          <span className="inline-flex items-center gap-1.5 text-[12px] font-semibold uppercase tracking-wider text-[#9aa49f]">
+            <Calendar size={13} />
+            {item.published_at || item.created_at}
+          </span>
+        )}
+        <h3 className="mt-3 text-xl font-semibold tracking-[-.03em]">
+          {item.title}
+        </h3>
+        {item.short_description && (
+          <p className="mt-2 text-sm leading-6 text-[#707b76]">
+            {item.short_description}
+          </p>
+        )}
+      </div>
+    </button>
+  );
+}
+
+function PostModal({ item, onClose }) {
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, []);
+
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [onClose]);
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-[#15231e]/50 p-4 backdrop-blur-sm"
+      onClick={onClose}
+    >
+      <div
+        className="max-h-[90vh] w-full max-w-[760px] overflow-y-auto rounded-[28px] bg-[#f5f6f5] shadow-2xl"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="relative">
+          <div className="relative flex aspect-video w-full items-center justify-center overflow-hidden rounded-t-[28px] bg-[#dfeae5]">
+            {item.image_url ? (
+              <img
+                src={item.image_url}
+                alt={item.title}
+                className="h-full w-full object-cover"
+              />
+            ) : (
+              <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-[#e1eae5] to-[#c6d7d0] text-[#4a6258]">
+                <Sparkles size={40} />
+              </div>
+            )}
+          </div>
+          <button
+            onClick={onClose}
+            className="absolute right-5 top-5 flex h-9 w-9 items-center justify-center rounded-full bg-white/80 text-[#58635e] transition hover:bg-[#5cedb8]"
+            aria-label="Закрыть"
+          >
+            <X size={17} />
+          </button>
         </div>
-        <div className="flex min-h-[360px] items-end rounded-[28px] border border-[#d7d7d5] bg-[#e9e8e5] p-8">
-          <div>
-            <span className="text-[12px] font-bold uppercase tracking-[.16em] text-[#938f88]">
-              Будущее рядом
+
+        <div className="p-7 sm:p-10">
+          {(item.published_at || item.created_at) && (
+            <span className="inline-flex items-center gap-1.5 text-[12px] font-bold uppercase tracking-[.18em] text-[#30a980]">
+              <Calendar size={13} />
+              {item.published_at || item.created_at}
             </span>
-            <p className="mt-4 max-w-[320px] text-2xl font-semibold leading-tight tracking-[-.04em] text-[#5d5b57]">
-              Место для вашей истории и будущих фотографий
+          )}
+          <h2 className="mt-4 text-3xl font-semibold tracking-[-.05em] sm:text-4xl">
+            {item.title}
+          </h2>
+          {item.short_description && (
+            <p className="mt-4 text-base font-medium leading-7 text-[#4a5a53]">
+              {item.short_description}
+            </p>
+          )}
+          <div className="mt-6 border-t border-[#dce3df] pt-6">
+            <p className="whitespace-pre-line text-[15px] leading-7 text-[#68736e]">
+              {item.full_description}
             </p>
           </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 }
 
@@ -729,7 +1122,7 @@ function Footer() {
             alt="Робо-решения"
             className="h-20 w-20 rounded-xl object-contain"
           />
-          <span className="font-bold">
+          <span className="text-[24px] font-bold">
             Робо-решения<span className="text-[#43c99d]">.</span>
           </span>
         </Link>
