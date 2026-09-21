@@ -1065,10 +1065,10 @@ function Contacts() {
               <div>
                 <p className="text-sm font-semibold">Телефон</p>
                 <a
-                  href="tel:+78005553535"
+                  href="tel:+79206078588"
                   className="text-base hover:text-[#2ca77f] transition"
                 >
-                  8 800 555-35-35
+                  89206078588
                 </a>
               </div>
             </div>
@@ -1078,10 +1078,10 @@ function Contacts() {
               <div>
                 <p className="text-sm font-semibold">Email</p>
                 <a
-                  href="mailto:hello@robo.pro"
+                  href="mailto:RoboSolutions@yandex.ru"
                   className="text-base hover:text-[#2ca77f] transition"
                 >
-                  hello@robo.pro
+                  RoboSolutions@yandex.ru
                 </a>
               </div>
             </div>
@@ -1090,7 +1090,7 @@ function Contacts() {
               <Compass size={20} className="mt-0.5 text-[#000000]" />
               <div>
                 <p className="text-sm font-semibold">Адрес</p>
-                <p className="text-base">г. Москва, ул. Примерная, д. 1</p>
+                <p className="text-base">Брянская область, с. Жирятино</p>
               </div>
             </div>
 
@@ -1129,6 +1129,9 @@ function Footer() {
         <div className="flex flex-wrap gap-x-6 gap-y-3 text-[14px] text-[#7a8580]">
           <Link to="/catalog" className="transition hover:text-[#219871]">
             Каталог
+          </Link>
+          <Link to="/posts" className="transition hover:text-[#219871]">
+            Посты
           </Link>
           <Link to="/about" className="transition hover:text-[#219871]">
             О компании

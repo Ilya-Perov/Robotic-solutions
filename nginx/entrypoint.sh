@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 
-CERT=/etc/letsencrypt/live/grandbiotech.ru/fullchain.pem
+CERT=/etc/letsencrypt/live/robot-solutions.ru/fullchain.pem
 
 if [ -f "$CERT" ]; then
     echo "→ Сертификат найден, используем HTTPS-конфиг"
