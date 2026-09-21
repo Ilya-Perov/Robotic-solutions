@@ -3,8 +3,8 @@ from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .models import Robot
-from .serializers import RobotSerializer, ContactRequestSerializer
+from .models import Robot, Post
+from .serializers import RobotSerializer, PostSerializer, ContactRequestSerializer
 
 
 class RobotListView(generics.ListAPIView):
@@ -15,6 +15,12 @@ class RobotListView(generics.ListAPIView):
     ordering_fields = ["id", "name", "weight_kg", "max_speed_kmh", "autonomy_hours"]
     filterset_fields = ["category"]
 
+class PostListView(generics.ListAPIView):
+    queryset = Post.objects.filter(is_published=True)
+    serializer_class = PostSerializer
+    pagination_class = None
+    search_fields = ["title", "short_description", "full_description"]
+    ordering_fields = ["created_at", "published_at", "order"]
 
 class SendRequestView(APIView):
     def post(self, request):

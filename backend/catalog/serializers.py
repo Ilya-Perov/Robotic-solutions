@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Robot
+from .models import Robot, Post
 
 
 class RobotSerializer(serializers.ModelSerializer):
@@ -17,6 +17,7 @@ class RobotSerializer(serializers.ModelSerializer):
             "category",
             "category_label",
             "price",
+            "gallery",
             "length_m",
             "width_m",
             "weight_kg",
@@ -50,3 +51,23 @@ class ContactRequestSerializer(serializers.Serializer):
     phone = serializers.CharField(max_length=50)
     email = serializers.EmailField()
     message = serializers.CharField(required=False, allow_blank=True)
+
+class PostSerializer(serializers.ModelSerializer):
+    created_at = serializers.DateTimeField(format="%d.%m.%Y", read_only=True)
+    updated_at = serializers.DateTimeField(format="%d.%m.%Y", read_only=True)
+    published_at = serializers.DateTimeField(format="%d.%m.%Y", read_only=True)
+
+    class Meta:
+        model = Post
+        fields = [
+            "id",
+            "title",
+            "short_description",
+            "full_description",
+            "image_url",
+            "created_at",
+            "updated_at",
+            "published_at",
+            "is_published",
+            "order",
+        ]

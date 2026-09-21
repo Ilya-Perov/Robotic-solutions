@@ -2,7 +2,7 @@
 set -e
 
 echo "→ Выравниваем права на volume..."
-chown -R appuser:appuser /app/media /app/staticfiles /app/data
+chown -R appuser:appuser /app/media /app/staticfiles
 
 echo "→ Ожидаем доступности базы данных..."
 
@@ -15,9 +15,13 @@ if [ -n "$DB_PASSWORD" ]; then
     echo "✓ PostgreSQL доступна"
 fi
 
-# Проверка SQLite (для development)
-if [ -f "/app/data/db.sqlite3" ]; then
-    echo "✓ SQLite база найдена"
+
+# Генерация миграций — только в DEBUG, чтобы не сломать прод
+if [ "$DJANGO_DEBUG" = "True" ] || [ "$DEBUG" = "True" ] || [ "$DEBUG" = "1" ]; then
+    echo "→ Генерируем миграции (dev)..."
+    gosu appuser python manage.py makemigrations --noinput || true
+else
+    echo "→ DEBUG выключен, миграции не генерируем (только применяем)"
 fi
 
 echo "→ Применяем миграции..."
