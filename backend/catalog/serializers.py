@@ -3,7 +3,6 @@ from .models import Robot, Post
 
 
 class RobotSerializer(serializers.ModelSerializer):
-    image = serializers.SerializerMethodField()
     category_label = serializers.CharField(source="get_category_display", read_only=True)
 
     class Meta:
@@ -13,7 +12,7 @@ class RobotSerializer(serializers.ModelSerializer):
             "name",
             "short_description",
             "full_description",
-            "image",
+            "image_url",
             "category",
             "category_label",
             "price",
@@ -35,15 +34,6 @@ class RobotSerializer(serializers.ModelSerializer):
             "supports_beacon",
             "supports_tug",
         ]
-
-    def get_image(self, obj):
-        request = self.context.get("request")
-        if obj.image:
-            url = obj.image.url
-            if request:
-                return request.build_absolute_uri(url)
-            return url
-        return None
 
 
 class ContactRequestSerializer(serializers.Serializer):

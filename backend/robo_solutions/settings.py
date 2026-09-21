@@ -23,20 +23,10 @@ env = environ.Env(
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # SECURITY SETTINGS
-SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY")
-if not SECRET_KEY:
-    raise ValueError(
-        "DJANGO_SECRET_KEY environment variable must be set!"
-    )
-
-DEBUG = env.bool('DJANGO_DEBUG', default=False)
-
-ALLOWED_HOSTS = [h.strip() for h in os.environ.get(
-    "DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1"
-).split(",") if h.strip()]
-
-_csrf = os.environ.get("DJANGO_CSRF_TRUSTED_ORIGINS", "")
-CSRF_TRUSTED_ORIGINS = [o.strip() for o in _csrf.split(",") if o.strip()]
+SECRET_KEY = env("DJANGO_SECRET_KEY")
+DEBUG = env.bool("DJANGO_DEBUG", default=False)
+ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=["localhost", "127.0.0.1"])
+CSRF_TRUSTED_ORIGINS = env.list("DJANGO_CSRF_TRUSTED_ORIGINS", default=[])
 
 # Application definition
 

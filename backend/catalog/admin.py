@@ -16,7 +16,7 @@ class RobotAdmin(admin.ModelAdmin):
     search_fields = ("name", "short_description", "full_description")
     fieldsets = (
         ("Основное", {
-            "fields": ("name", "short_description", "full_description", "category", "image", "gallery", "price")
+            "fields": ("name", "short_description", "full_description", "category", "image_url", "gallery", "price")
         }),
         ("Габариты и масса", {
             "fields": ("length_m", "width_m", "weight_kg")

@@ -11,8 +11,11 @@ class Robot(models.Model):
     name = models.CharField(max_length=200, verbose_name="Название")
     short_description = models.CharField(max_length=300, verbose_name="Краткое описание")
     full_description = models.TextField(verbose_name="Полное описание")
-    image = models.ImageField(
-        upload_to="robots/", verbose_name="Изображение", null=True, blank=True
+    image_url = models.URLField(
+        "Ссылка на фото",
+        max_length=500,
+        blank=True,
+        help_text="Прямая ссылка на изображение, например: https://i.imgur.com/abc.jpg",
     )
     category = models.CharField(
         max_length=20,

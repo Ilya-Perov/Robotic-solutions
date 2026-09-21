@@ -45,7 +45,7 @@ const fallbackRobots = [
     category: "monitoring",
     category_label: "Мониторинг",
     price: null,
-    image: null,
+    image_url: null,
     length_m: 2.0,
     width_m: 1.0,
     weight_kg: 12,
@@ -443,9 +443,9 @@ function ProductCard({ item, index, onClick }) {
       style={{ animationDelay: `${index * 70}ms` }}
     >
       <div className="relative mb-4 flex h-[270px] items-center justify-center overflow-hidden rounded-[24px] bg-[#e2ebe6] transition duration-300 group-hover:scale-[1.015] group-hover:bg-[#d7e8df]">
-        {item.image ? (
+        {item.image_url ? (
           <img
-            src={item.image}
+            src={item.image_url}
             alt={item.name}
             className="h-full w-full object-cover"
           />
@@ -549,9 +549,9 @@ function ProductModal({ item, onClose }) {
           <div className="relative grid md:grid-cols-[.85fr_1.15fr]">
             {/* Левая колонка — превью */}
             <div className="relative flex aspect-square items-center justify-center overflow-hidden bg-[#dfeae5] rounded-[28px]">
-              {item.image ? (
+              {item.image_url ? (
                 <img
-                  src={item.image}
+                  src={item.image_url}
                   alt={item.name}
                   className="h-full w-full object-cover"
                 />
@@ -905,9 +905,9 @@ function PostCard({ item, index, onClick }) {
       style={{ animationDelay: `${index * 70}ms` }}
     >
       <div className="relative flex aspect-video w-full items-center justify-center overflow-hidden bg-[#dfeae5]">
-        {item.image ? (
+        {item.image_url ? (
           <img
-            src={item.image}
+            src={item.image_url}
             alt={item.title}
             className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
           />
@@ -968,9 +968,9 @@ function PostModal({ item, onClose }) {
       >
         <div className="relative">
           <div className="relative flex aspect-video w-full items-center justify-center overflow-hidden rounded-t-[28px] bg-[#dfeae5]">
-            {item.image ? (
+            {item.image_url ? (
               <img
-                src={item.image}
+                src={item.image_url}
                 alt={item.title}
                 className="h-full w-full object-cover"
               />

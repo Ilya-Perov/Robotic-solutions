@@ -55,12 +55,6 @@ local_settings.py
 .gitlab-ci.yml
 .travis.yml
 
-# Docker
-Dockerfile
-dockerfile
-.dockerignore
-docker-compose.yml
-
 # Documentation
 README.md
 docs/

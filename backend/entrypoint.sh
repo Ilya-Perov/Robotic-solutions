@@ -15,15 +15,6 @@ if [ -n "$DB_PASSWORD" ]; then
     echo "✓ PostgreSQL доступна"
 fi
 
-
-# Генерация миграций — только в DEBUG, чтобы не сломать прод
-if [ "$DJANGO_DEBUG" = "True" ] || [ "$DEBUG" = "True" ] || [ "$DEBUG" = "1" ]; then
-    echo "→ Генерируем миграции (dev)..."
-    gosu appuser python manage.py makemigrations --noinput || true
-else
-    echo "→ DEBUG выключен, миграции не генерируем (только применяем)"
-fi
-
 echo "→ Применяем миграции..."
 gosu appuser python manage.py migrate --noinput
 
