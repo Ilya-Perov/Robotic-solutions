@@ -17,7 +17,16 @@ services:
       - web
     ports:
       - "5432:5432"
-
+  
+  autoheal:
+    image: willfarrell/autoheal:latest
+    container_name: autoheal
+    restart: unless-stopped
+    environment:
+      - AUTOHEAL_CONTAINER_LABEL=all
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+  
   backend:
     build:
       context: ./backend

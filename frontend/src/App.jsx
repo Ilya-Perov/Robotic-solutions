@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import {
-  HashRouter,
+  BrowserRouter,
   Link,
   NavLink,
   Route,
@@ -139,9 +139,9 @@ function pluralize(count, forms) {
 
 function App() {
   return (
-    <HashRouter>
+    <BrowserRouter>
       <Site />
-    </HashRouter>
+    </BrowserRouter>
   );
 }
 
